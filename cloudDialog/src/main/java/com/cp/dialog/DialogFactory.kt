@@ -160,17 +160,6 @@ class DialogFactory private constructor() {
         }
 
         /**
-         *
-         * 是否弹出键盘
-         * @param editTextId 光标位置
-         */
-        @Deprecated("过期，新方法setEditFocus")
-        fun isShowKeyboard(editTextId: Int): Builder {
-            this.editTextId = editTextId
-            return this
-        }
-
-        /**
          * 是否弹出键盘
          * @param editTextId 光标位置
          */
@@ -244,36 +233,21 @@ class DialogFactory private constructor() {
         }
 
 
-        fun setTimerLifecy(time: Int, callBack: (Int, DialogFactory) -> Unit): Builder {
+        fun setTimerLifecy(
+            time: Int,
+            callBack: ((Int, DialogFactory) -> Unit) = { _, _ -> }
+        ): Builder {
             mContext.lifecycleScope.launch(Dispatchers.Main) {
                 repeat(time) {
                     delay(1000)
                     if (!isDismiss)
-                        callBack(time-it, dialogFactory)
+                        callBack(time - it, dialogFactory)
                 }
                 dialogFactory.dismiss()
             }
             return this
         }
 
-        /**
-         * 倒计时
-         * @param time 单位秒
-         */
-        @Deprecated("过期，新方法setTimerLifecy")
-        fun setTimer(time: Long, callBack: (Int, DialogFactory) -> Unit): Builder {
-            CountDownTimerManager.getInstance()
-                .startCountDownTimer(time, object : CountDownTimerManager.CountDownTimerListener {
-                    override fun onTick(second: Int) {
-                        callBack(second, dialogFactory)
-                    }
-
-                    override fun onFinish() {
-                        dialogFactory.dismiss()
-                    }
-                })
-            return this
-        }
 
         /**
          * Dilaog 创建完成显示
@@ -302,14 +276,6 @@ class DialogFactory private constructor() {
             return this
         }
 
-        /**
-         * 创建自定义布局的AlertDialog
-         */
-        @Deprecated("过期，使用OnClickListener")
-        fun create(callBack: ((View, DialogFactory) -> Unit) = { _: View, _: DialogFactory -> }): DialogFactory {
-            callBack(callBack)
-            return dialogFactory
-        }
 
         private fun callBack(callBack: ((View, DialogFactory) -> Unit) = { _: View, _: DialogFactory -> }) {
             if (!mContext.isDestroyed) {
