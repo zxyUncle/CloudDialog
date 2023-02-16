@@ -1,0 +1,3 @@
+include ':cloudDialog'
+include ':app'
+rootProject.name = "CloudDialog"

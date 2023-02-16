@@ -1,0 +1,80 @@
+<resources>
+    <!--BottomSheetDialog-->
+    <style name="bottomSheetDialog" parent="Theme.Design.BottomSheetDialog">
+        <item name="android:windowAnimationStyle">@style/zxy_translate_bottom</item>
+        <item name="background">@android:color/white</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        //透明度
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.1</item>
+    </style>
+
+    <declare-styleable name="MaxHeightScrollView">
+        <attr name="maxHeight" format="dimension" />
+    </declare-styleable>
+
+
+    <!--自定义万能布局Dialog 背景透明-->
+    <style name="zxy_MyDilog" parent="Theme.AppCompat.Dialog">
+        <!--设置window的窗口背景为透明-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <!--    折叠动画B-->
+    <style name="zxy_fold_bottom">
+        <item name="android:windowEnterAnimation">@anim/zxt_dialog_enter_anim_fold_bottom</item>
+        <item name="android:windowExitAnimation">@anim/zxt_dialog_exit_anim_fold_bottom</item>
+    </style>
+    <!--    折叠动画T-->
+    <style name="zxy_fold_top">
+        <item name="android:windowEnterAnimation">@anim/zxt_dialog_enter_anim_fold_top</item>
+        <item name="android:windowExitAnimation">@anim/zxt_dialog_exit_anim_fold_top</item>
+    </style>
+
+    <!--    折叠动画L-->
+    <style name="zxy_fold_left">
+        <item name="android:windowEnterAnimation">@anim/zxt_dialog_enter_anim_fold_left</item>
+        <item name="android:windowExitAnimation">@anim/zxt_dialog_exit_anim_fold_left</item>
+    </style>
+
+    <!--    折叠动画R-->
+    <style name="zxy_fold_right">
+        <item name="android:windowEnterAnimation">@anim/zxt_dialog_enter_anim_fold_right</item>
+        <item name="android:windowExitAnimation">@anim/zxt_dialog_exit_anim_fold_right</item>
+    </style>
+
+    <!--    折叠动画T,没有退出动画-->
+    <style name="zxy_fold_top_no_bottom">
+        <item name="android:windowEnterAnimation">@anim/zxt_dialog_enter_anim_fold_top</item>
+        <item name="android:windowExitAnimation">@anim/zxy_dialog_exit_alpha</item>
+    </style>
+
+    <!--    中心缩放动画-->
+    <style name="zxy_zoom">
+        <item name="android:windowEnterAnimation">@anim/zxt_dialog_enter_anim_zoom</item>
+        <item name="android:windowExitAnimation">@anim/zxt_dialog_exit_anim_zoom</item>
+    </style>
+
+    <!--    底部弹出动画-->
+    <style name="zxy_translate_bottom">
+        <item name="android:windowEnterAnimation">@anim/zxy_dialog_enter_translate_bottom</item>
+        <item name="android:windowExitAnimation">@anim/zxy_dialog_exit_translate_bottom</item>
+    </style>
+
+    <!--    顶部弹出动画-->
+    <style name="zxy_translate_top">
+        <item name="android:windowEnterAnimation">@anim/zxy_dialog_enter_translate_top</item>
+        <item name="android:windowExitAnimation">@anim/zxy_dialog_exit_translate_top</item>
+    </style>
+    <!--    顶部弹出动画,没有退出动画-->
+    <style name="zxy_translate_top_no_bottom">
+        <item name="android:windowEnterAnimation">@anim/zxy_dialog_enter_translate_top</item>
+        <item name="android:windowExitAnimation">@anim/zxy_dialog_exit_alpha</item>
+    </style>
+</resources>

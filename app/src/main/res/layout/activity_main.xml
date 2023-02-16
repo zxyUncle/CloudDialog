@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btnAlertDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dialog"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btnPopWindow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="PopWindow"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btnToast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Toast"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btnBottomSheetDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="BottomSheetDialog"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btcnScan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Scan"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btnAnimatorShow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="AnimatorShow"
+        android:textAllCaps="false" />
+    <Button
+        android:id="@+id/btnAnimatorHide"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="AnimatorHide"
+        android:textAllCaps="false" />
+
+    <View
+        android:id="@+id/vAnimator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#000"
+        android:visibility="gone" />
+
+</LinearLayout>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context="com.cloud.dialog.activity.ToastActivity">
+
+    <Button
+        android:id="@+id/btnToast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TToast" />
+    <Button
+        android:id="@+id/btnToast1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TToast1" />
+
+    <Button
+        android:id="@+id/btnCoustToast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="自定义布局TToast" />
+
+    <Button
+        android:id="@+id/btnZToast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ZToast" />
+
+
+    <Button
+        android:id="@+id/btnLoad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="加载中" />
+
+
+</LinearLayout>

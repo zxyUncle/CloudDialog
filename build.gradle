@@ -1,0 +1,40 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    ext.kotlin_version = "1.5.20"
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.1.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.20"
+//        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+//publishing {
+//    publications {
+//        // 这个mavenJava可以随便填，只是一个任务名字而已
+//        // MavenPublication必须有，这个是调用的任务类
+//        mavenJava(MavenPublication) {
+//            // 这里头是artifacts的配置信息，不填会采用默认的
+//            groupId = 'com.zxy.zxydialog'
+//            artifactId = 'library'
+//            version = '1.2.5'
+//
+//            from components.java
+//        }
+//    }
+//}
