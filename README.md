@@ -16,7 +16,7 @@ Step 1
 		}
 	}
 	dependencies {
-	  implementation 'com.github.zxyUncle:DialogDemo:latest.release'
+      implementation 'com.github.zxyUncle:CloudDialog:Tag'
 	}
 
 
