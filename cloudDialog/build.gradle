@@ -5,11 +5,8 @@ apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.3"
 
     defaultConfig {
-        minSdkVersion 19
-        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
 
@@ -54,7 +51,7 @@ project.afterEvaluate {
                 from components.release
                 groupId = 'com.github.zxyUncle'
                 artifactId = 'CloudDialog'
-                version = '1.0.2'
+                version = '1.0.4'
             }
         }
     }
