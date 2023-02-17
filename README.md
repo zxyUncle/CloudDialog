@@ -25,3 +25,6 @@ Step 1
 
   [1]: https://raw.githubusercontent.com/zxyUncle/DialogDemo/master/dialog/%E5%85%A8%E9%83%A8.gif
   [2]: https://juejin.cn/post/6946458247368802341
+
+Nexus
+./gradlew -p cloudDialog clean assembleRelease publish --info --stacktrace

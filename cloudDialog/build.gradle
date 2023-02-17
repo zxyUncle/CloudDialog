@@ -1,7 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'maven-publish'
+
+apply from: file("../maven.gradle")
 
 android {
     compileSdkVersion 30
@@ -40,19 +41,19 @@ dependencies {
     api 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
 }
 
-task sourceJar(type: Jar) {
-    classifier "sources"
-    from android.sourceSets.main.java.srcDirs
-}
-project.afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
-                from components.release
-                groupId = 'com.github.zxyUncle'
-                artifactId = 'CloudDialog'
-                version = '1.0.4'
-            }
-        }
-    }
-}
+//task sourceJar(type: Jar) {
+//    classifier "sources"
+//    from android.sourceSets.main.java.srcDirs
+//}
+//project.afterEvaluate {
+//    publishing {
+//        publications {
+//            release(MavenPublication) {
+//                from components.release
+//                groupId = 'com.github.zxyUncle'
+//                artifactId = 'CloudDialog'
+//                version = '1.0.4'
+//            }
+//        }
+//    }
+//}

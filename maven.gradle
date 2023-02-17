@@ -1,0 +1,99 @@
+// Android - aar 项目的maven仓库上传脚本
+// 引用方式：`apply from: file(GRADLE_TOOLS + '/gradle-mvn-push.gradle')`
+
+
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+//apply plugin: 'com.android.library'
+//
+//plugins {
+//    id 'java-library'
+//    id 'maven-publish'
+//    id 'signing'
+//}
+
+def initConfig() {
+    gradle.ext.releaseUrl = 'http://10.10.10.111:8081/nexus/content/repositories/releases/'
+    gradle.ext.snapshotUrl = 'http://10.10.10.111:8081/nexus/content/repositories/snapshots/'
+    gradle.ext.userName = 'admin'
+    gradle.ext.password = 'admin123'
+}
+
+def isReleaseBuild() {
+    return PROJ_VERSION.contains("SNAPSHOT") == false
+}
+
+def getReleaseRepositoryUrl() {
+    return gradle.ext.releaseUrl
+}
+
+def getSnapshotRepositoryUrl() {
+    return gradle.ext.snapshotUrl
+}
+
+def getRepositoryUsername() {
+    return gradle.ext.userName
+}
+
+def getRepositoryPassword() {
+    return gradle.ext.password
+}
+
+task sourceJar(type: Jar) {
+    archiveClassifier.set('sources')
+    // 获取源码路径，处理Kotlin源码上传的问题
+    from android.sourceSets.main.java.getSrcDirs()
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                initConfig()
+                artifactId = PROJ_ARTIFACTID
+                version = PROJ_VERSION
+                groupId = PROJ_GROUP
+                from components.release
+
+                artifact sourceJar
+            }
+        }
+
+        repositories {
+            maven {
+                allowInsecureProtocol true
+                credentials {
+                    username = getRepositoryUsername()
+                    password = getRepositoryPassword()
+                }
+                if (!isReleaseBuild()) {
+                    url = getSnapshotRepositoryUrl()
+                } else {
+                    url = getReleaseRepositoryUrl()
+                }
+            }
+        }
+    }
+
+}
+
+task androidJavadocs(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    android.libraryVariants.all { variant ->
+        if (variant.name == 'release') {
+            owner.classpath += variant.javaCompileProvider.get().classpath
+        }
+    }
+    exclude '**/R.html', '**/R.*.html', '**/index.html'
+}
+
+task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
+    archiveClassifier.set('javadoc')
+    from androidJavadocs.destinationDir
+}
+
+task androidSourcesJar(type: Jar) {
+    archiveClassifier.set('sources')
+    from android.sourceSets.main.java.getSrcDirs()
+}

@@ -16,7 +16,6 @@ import androidx.lifecycle.lifecycleScope
 import com.cp.dialog.api.OnDismissListener
 import com.cp.dialog.tools.AnimatorEnum
 import com.cp.dialog.tools.Applications
-import com.cp.dialog.tools.CountDownTimerManager
 import com.cp.dialog.tools.MyLifecycleActImp
 import kotlinx.android.synthetic.main.zxy_alert_dialog.view.*
 import kotlinx.coroutines.Dispatchers
