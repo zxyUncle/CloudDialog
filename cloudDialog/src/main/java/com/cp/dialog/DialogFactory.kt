@@ -31,6 +31,8 @@ import kotlinx.coroutines.launch
  * * 自定义万能布局AletDialog
  * ******************************************
  */
+internal var listDialog = mutableListOf<DialogFactory>()
+
 class DialogFactory private constructor() {
 
     var layoutView: View? = null                           //Dialog的布局文件
@@ -43,6 +45,7 @@ class DialogFactory private constructor() {
     var onDispatchTouchEvent: OnDispatchTouchEvent? = null
     lateinit var mContext: ComponentActivity
 
+
     companion object {
         /**
          * 必须是ComponentActivity 子类
@@ -51,6 +54,15 @@ class DialogFactory private constructor() {
         @JvmStatic
         fun build(mContext: ComponentActivity): Builder {
             return Builder(mContext)
+        }
+
+        /**
+         * 清空dialog
+         */
+        fun clearAllDialog() {
+            for (dialogFactory in listDialog) {
+                dialogFactory.dismiss()
+            }
         }
     }
 
@@ -303,7 +315,7 @@ class DialogFactory private constructor() {
 
                 dialogFactory.dialog?.fullScreenShow()
                 dialogFactory.dialog?.show()
-
+                listDialog.add(dialogFactory)
                 if (editTextId != null) {
                     dialogFactory.layoutView?.postDelayed({
                         showKeyboard(dialogFactory.layoutView?.findViewById(editTextId!!))
