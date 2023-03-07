@@ -111,6 +111,7 @@ class DialogFactory private constructor() {
         var content: String? = null
         var editTextId: Int? = null
         var isDismiss = false
+        lateinit var myLocationListener: MyLifecycleActImp
 
         var onDismissListener: OnDismissListener? = null
         var onCancelListener: DialogInterface.OnCancelListener? = null
@@ -124,10 +125,10 @@ class DialogFactory private constructor() {
         }
 
         private fun onLifecycleListener() {
-            val myLocationListener =
-                MyLifecycleActImp(object : MyLifecycleActImp.LifecycleListener {
+            myLocationListener =
+                MyLifecycleActImp(mContext, object : MyLifecycleActImp.LifecycleListener {
                     override fun onResult() {
-                        dialogFactory!!.dismiss()
+                        dialogFactory.dismiss()
                     }
                 })
             mContext.lifecycle.addObserver(myLocationListener)
