@@ -19,6 +19,7 @@ import com.cp.dialog.tools.Applications
 import com.cp.dialog.tools.MyLifecycleActImp
 import kotlinx.android.synthetic.main.zxy_alert_dialog.view.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -111,6 +112,7 @@ class DialogFactory private constructor() {
         var content: String? = null
         var editTextId: Int? = null
         var isDismiss = false
+        var timerLuanch: Job? = null
         lateinit var myLocationListener: MyLifecycleActImp
 
         var onDismissListener: OnDismissListener? = null
@@ -249,7 +251,7 @@ class DialogFactory private constructor() {
             time: Int,
             callBack: ((Int, DialogFactory) -> Unit) = { _, _ -> }
         ): Builder {
-            mContext.lifecycleScope.launch(Dispatchers.Main) {
+            timerLuanch = mContext.lifecycleScope.launch(Dispatchers.Main) {
                 repeat(time) {
                     delay(1000)
                     if (!isDismiss)
@@ -347,9 +349,10 @@ class DialogFactory private constructor() {
                 }
 
                 dialogFactory.dialog?.setOnDismissListener {
+                    timerLuanch?.cancel()
+                    isDismiss = true
                     if (onDismissListener != null) {
                         onDismissListener!!.onDismiss(it)
-                        isDismiss = true
                     }
                 }
             } else {
