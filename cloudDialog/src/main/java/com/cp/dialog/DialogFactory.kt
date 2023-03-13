@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Build
+import android.os.CountDownTimer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -12,16 +13,12 @@ import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.activity.ComponentActivity
-import androidx.lifecycle.lifecycleScope
 import com.cp.dialog.api.OnDismissListener
 import com.cp.dialog.tools.AnimatorEnum
 import com.cp.dialog.tools.Applications
 import com.cp.dialog.tools.MyLifecycleActImp
 import kotlinx.android.synthetic.main.zxy_alert_dialog.view.*
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 
 /**
@@ -112,7 +109,7 @@ class DialogFactory private constructor() {
         var content: String? = null
         var editTextId: Int? = null
         var isDismiss = false
-        var timerLuanch: Job? = null
+        var timer: CountDownTimer? = null
         lateinit var myLocationListener: MyLifecycleActImp
 
         var onDismissListener: OnDismissListener? = null
@@ -248,17 +245,21 @@ class DialogFactory private constructor() {
 
 
         fun setTimerLifecy(
-            time: Int,
-            callBack: ((Int, DialogFactory) -> Unit) = { _, _ -> }
+            time: Long,
+            callBack: ((Long, DialogFactory) -> Unit) = { _, _ -> }
         ): Builder {
-            timerLuanch = mContext.lifecycleScope.launch(Dispatchers.Main) {
-                repeat(time) {
-                    delay(1000)
+            timer = object :CountDownTimer(time*1000,1000){
+                override fun onTick(millisUntilFinished: Long) {
                     if (!isDismiss)
-                        callBack(time - it, dialogFactory)
+                        callBack(millisUntilFinished/1000, dialogFactory)
                 }
-                dialogFactory.dismiss()
+
+                override fun onFinish() {
+                    dialogFactory.dismiss()
+                }
+
             }
+            timer?.start()
             return this
         }
 
@@ -294,7 +295,7 @@ class DialogFactory private constructor() {
         private fun callBack(callBack: ((View, DialogFactory) -> Unit) = { _: View, _: DialogFactory -> }) {
             if (!mContext.isDestroyed) {
                 if (dialogFactory.dialog != null) {
-                    dialogFactory.dismiss()
+                    dialogFactory.dismiss(dialogFactory)
                 }
                 dialogFactory.dialog = MyDialog(
                     mContext,
@@ -349,8 +350,8 @@ class DialogFactory private constructor() {
                 }
 
                 dialogFactory.dialog?.setOnDismissListener {
-                    timerLuanch?.cancel()
                     isDismiss = true
+                    timer?.cancel()
                     if (onDismissListener != null) {
                         onDismissListener!!.onDismiss(it)
                     }
@@ -400,8 +401,8 @@ class DialogFactory private constructor() {
     }
 
 
-    fun dismiss() {
-        if (dialog != null) {
+    fun dismiss(dialogFactory: DialogFactory) {
+        if (dialogFactory.dialog != null && dialogFactory.dialog?.isShowing == true) {
             dialog!!.cancel()
             dialog = null
         }

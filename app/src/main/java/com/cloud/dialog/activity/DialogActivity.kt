@@ -72,9 +72,9 @@ class DialogActivity : ComponentActivity() , LifecycleObserver {
                             alertDialogUtils.layoutView!!.findViewById<EditText>(R.id.tvDialgContent)
                         tvDialgContent.setText("$time")
                         Log.e("zxy", "$time")
-                        if (time == 7) {
-                            finish()
-                        }
+//                        if (time==3L) {
+//                            finish()
+//                        }
 
                 }
                 .show {
