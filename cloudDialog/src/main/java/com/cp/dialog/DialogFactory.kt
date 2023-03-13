@@ -295,7 +295,7 @@ class DialogFactory private constructor() {
         private fun callBack(callBack: ((View, DialogFactory) -> Unit) = { _: View, _: DialogFactory -> }) {
             if (!mContext.isDestroyed) {
                 if (dialogFactory.dialog != null) {
-                    dialogFactory.dismiss(dialogFactory)
+                    dialogFactory.dismiss()
                 }
                 dialogFactory.dialog = MyDialog(
                     mContext,
@@ -401,8 +401,8 @@ class DialogFactory private constructor() {
     }
 
 
-    fun dismiss(dialogFactory: DialogFactory) {
-        if (dialogFactory.dialog != null && dialogFactory.dialog?.isShowing == true) {
+    fun dismiss() {
+        if (dialog != null && dialog?.isShowing == true) {
             dialog!!.cancel()
             dialog = null
         }
