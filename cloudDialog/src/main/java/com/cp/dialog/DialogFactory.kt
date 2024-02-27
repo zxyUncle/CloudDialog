@@ -19,6 +19,7 @@ import com.cp.dialog.tools.Applications
 import com.cp.dialog.tools.MyLifecycleActImp
 import kotlinx.android.synthetic.main.zxy_alert_dialog.view.*
 import kotlinx.coroutines.Job
+import java.lang.ref.WeakReference
 
 
 /**
@@ -36,6 +37,7 @@ class DialogFactory private constructor() {
     var layoutView: View? = null                           //Dialog的布局文件
     private var cancelable: Boolean = true                          //是否可以取消  true可以
     var dialog: MyDialog? = null                        // AlertDilaog
+    var dialogWeak :WeakReference<MyDialog>? = null
     var listView: MutableList<Int>? = null
     var transparency: Float = 0.5f                              // 透明度
     var fullScreen: Boolean = false
@@ -297,11 +299,12 @@ class DialogFactory private constructor() {
                 if (dialogFactory.dialog != null) {
                     dialogFactory.dismiss(dialogFactory)
                 }
-                dialogFactory.dialog = MyDialog(
+                dialogFactory.dialogWeak= WeakReference(MyDialog(
                     mContext,
                     R.style.zxy_MyDilog,
                     dialogFactory
-                )
+                ))
+                dialogFactory.dialog = dialogFactory.dialogWeak!!.get()
                 if (dialogFactory.layoutView == null) {//自带的dialog
                     setView(R.layout.zxy_alert_dialog)
                     setOnClick(R.id.tvDialogCancel, R.id.tvDialogConfig)
@@ -352,6 +355,8 @@ class DialogFactory private constructor() {
                 dialogFactory.dialog?.setOnDismissListener {
                     isDismiss = true
                     timer?.cancel()
+                    dialogFactory.dialogWeak!!.get()?.dismiss()
+                    dialogFactory.dialogWeak!!.clear()
                     if (onDismissListener != null) {
                         onDismissListener!!.onDismiss(it)
                     }
@@ -403,8 +408,8 @@ class DialogFactory private constructor() {
 
     fun dismiss(dialogFactory: DialogFactory) {
         if (dialogFactory.dialog != null && dialogFactory.dialog?.isShowing == true) {
-            dialog!!.cancel()
-            dialog = null
+            dialogWeak?.get()?.dismiss()
+            dialogWeak?.clear()
         }
     }
 
